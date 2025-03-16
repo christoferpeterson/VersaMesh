@@ -4,6 +4,14 @@
 SCRIPT_NAME="VersaMesh"
 DIST_DIR="dist"
 BUILD_JSON="$DIST_DIR/build.json"
+README_SOURCE="README.dist.md"
+README_DEST="$DIST_DIR/README.md"
+
+# Get the current Git branch
+BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+
+# Convert branch name to lowercase and sanitize
+BRANCH_SUFFIX=$(echo "$BRANCH_NAME" | tr '[:upper:]' '[:lower:]' | tr -cd '[:alnum:]_-')
 
 # Function to check if a command exists
 command_exists() {
@@ -65,16 +73,23 @@ LATEST_TAG=$(git tag --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | h
 # Get the next version using Python script
 NEW_VERSION=$("$PYTHON_CMD" - <<EOF
 import semver
-import sys
 
-latest_tag = "$LATEST_TAG".strip() or "v1.0.0"
+latest_tag = "$LATEST_TAG".strip() or "v0.0.0"
 
-# Remove 'v' prefix
+# Remove 'v' prefix if present
 if latest_tag.startswith("v"):
     latest_tag = latest_tag[1:]
 
+# Remove any previous branch suffix
+base_version = latest_tag.split('-')[0]
+
 # Parse version and bump the patch version
-new_version = semver.Version.parse(latest_tag).bump_patch()
+new_version = semver.Version.parse(base_version).bump_patch()
+
+# Append branch name for non-main branches
+branch_suffix = "$BRANCH_SUFFIX"
+if branch_suffix and branch_suffix != "main":
+    new_version = f"{new_version}-{branch_suffix}"
 
 # Print with 'v' prefix for consistency
 print(f"v{new_version}")

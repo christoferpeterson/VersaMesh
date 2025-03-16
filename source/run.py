@@ -25,6 +25,11 @@ class Program(cmd.Cmd):
         super().__init__()
         self.engine = process_engine.ProcessEngine()
         self.build = build
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print(""" _____                 _____         _   """)
+        print("""|  |  |___ ___ ___ ___|     |___ ___| |_ """)
+        print("""|  |  | -_|  _|_ -| .'| | | | -_|_ -|   |""")
+        print(f""" \\___/|___|_| |___|__,|_|_|_|___|___|_|_| {build['__version__']}""")
 
     @doc(
         """
@@ -111,9 +116,4 @@ if __name__ == '__main__':
     if(os.path.exists(build_file)):
         with open(build_file) as f:
             build = json.load(f)
-
-    print(""" _____                 _____         _   """)
-    print("""|  |  |___ ___ ___ ___|     |___ ___| |_ """)
-    print("""|  |  | -_|  _|_ -| .'| | | | -_|_ -|   |""")
-    print(f""" \\___/|___|_| |___|__,|_|_|_|___|___|_|_| v{build['__version__']}""")
     Program(build).cmdloop()

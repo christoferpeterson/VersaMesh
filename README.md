@@ -1,4 +1,4 @@
-# dental-topography
+# VersaMesh
 Automates the workflow for preparing 3D dental scans for scientific research.
 
 ## Getting Started
