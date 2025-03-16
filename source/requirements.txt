@@ -1,0 +1,2 @@
+pymeshlab==2023.12.post3
+rpy2==3.5.17
