@@ -12,9 +12,14 @@ Ensure you have access to the following requirements:
 - molaR v5.3
 - Rvcg v0.22.2
 
-### Installation Steps
+### Installation Steps (Windows)
 
-In the terminal, navigate to the main folder containing the project. Next, run the steps involved with both Python and R.
+1. Download and extract VersaMesh
+2. Install Python >= 3.12.0
+3. Install R >= 4.4.0
+4. Setup R_HOME environment variable to your installation location. Typically R_HOME="C:\Program Files\R\R-{{your version of R}}"
+5. Run VersaMesh
+6. Use `help` command to navigate the program
 
 #### Python
 
@@ -47,6 +52,20 @@ renv::restore()
 ```
 
 
+
+### Processing and analyzing a .ply files
+
+1. Create a "data" folder at the location of versamesh.exe
+2. Move the .ply files to be analyzed into that folder
+3. Check the "settings" to make sure the algorithms are correct
+4. Run `process` to simplify and smooth the .ply files
+5. Confirm the "output" folder contains the desired results
+6. Run `analyze` to calculate topographical variables
+7. Check the "output" folder for .csv files and he topographical data
+
+
+## For Developers
+
 ### Running the program
 
 `py ./source/run.py`
@@ -54,8 +73,6 @@ renv::restore()
 1. Change any settings necessary with the `set` command.
 2. Simplify and smooth the ply files in the input directory using the `process` command. The simplified and smoothed files will be saved in the `outputFolder` in the settings.
 3. Run the `analyze` command to calculate topographical data points. Results will be output to a series of CSV files in the `ouputFolder` settings. There will be one CSV for each algorithm and a comprehensive CSV called `fullAnalysis.csv`.
-
-## For Developers
 
 ### Compiling the program
 
